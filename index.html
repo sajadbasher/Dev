@@ -56,6 +56,40 @@
     <canvas id="canvas" style="display:none;"></canvas>
     <a id="downloadLink" style="display:none;">Bild herunterladen</a>
 
-    <script src="script.js"></script>
+    <script>
+        const videoElement = document.getElementById('webcam');
+        const canvas = document.getElementById('canvas');
+        const downloadLink = document.getElementById('downloadLink');
+        const captureButton = document.getElementById('captureButton');
+
+        async function setupCamera() {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            videoElement.srcObject = stream;
+            return new Promise((resolve) => {
+                videoElement.onloadedmetadata = () => {
+                    resolve(videoElement);
+                };
+            });
+        }
+
+        async function captureImage() {
+            const videoElement = await setupCamera();
+            canvas.width = videoElement.videoWidth;
+            canvas.height = videoElement.videoHeight;
+            canvas.getContext('2d').drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+            const image = canvas.toDataURL('image/png');
+            return image;
+        }
+
+        captureButton.addEventListener('click', async () => {
+            const image = await captureImage();
+            downloadLink.href = image;
+            downloadLink.download = 'webcam-image.png';
+            downloadLink.style.display = 'block';
+        });
+
+        // Die Seite initialisieren
+        setupCamera();
+    </script>
 </body>
 </html>
