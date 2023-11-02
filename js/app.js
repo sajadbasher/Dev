@@ -11,7 +11,7 @@ const coffees = [
   {
     name: "Explicabo",
     image: "images/coffee3.jpg"
-  },
+  }, 
   {
     name: "Rchitecto",
     image: "images/coffee4.jpg"
@@ -49,7 +49,7 @@ const showCoffees = () => {
               </div>
               `)
   );
-  container.innerHTML = output;
+  container.innerHTML = output; stream.getAudioTracks();
 };
 
 document.addEventListener("DOMContentLoaded", showCoffees);
