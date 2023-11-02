@@ -49,7 +49,7 @@ const showCoffees = () => {
               </div>
               `)
   );
-  container.innerHTML = output;
+  container.innerHTML = output; document.getElementById;
 };
 
 document.addEventListener("DOMContentLoaded", showCoffees);
