@@ -61,5 +61,10 @@ if ("serviceWorker" in navigator) {
 
       .then(res => console.log("service worker registered"))
       .catch(err => console.log("service worker not registered", err));
-  });
+  }); <p><button onclick="getStream()">Grab video</button></p>
+<p><video autoplay style="height: 180px; width: 240px;"></video></p>
+<p><button onclick="takePhoto()">Take Photo!</button></p>
+<p><img id="imageTag" width="240" height="180"></p>
+
+<p><small>Demo by <a href="http://www.mcasas.tk/" target="_blank" rel="noopener">Miguel Casas-Sanchez</a>.</small></p>
 }
