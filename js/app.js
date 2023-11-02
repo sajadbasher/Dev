@@ -49,7 +49,7 @@ const showCoffees = () => {
               </div>
               `)
   );
-  container.innerHTML = output; stream.getAudioTracks();
+  container.innerHTML = output;
 };
 
 document.addEventListener("DOMContentLoaded", showCoffees);
