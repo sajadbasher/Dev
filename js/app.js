@@ -109,3 +109,38 @@ function getStream (type) {
       alert('Error: ' + err);
     });
 }
+// Funktion, um auf die Webcam zuzugreifen und das Video-Element zu aktualisieren
+async function setupCamera() {
+    const videoElement = document.getElementById('webcam');
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    videoElement.srcObject = stream;
+    return new Promise((resolve) => {
+        videoElement.onloadedmetadata = () => {
+            resolve(videoElement);
+        };
+    });
+}
+
+// Funktion zum Aufnehmen eines Bildes von der Webcam und Anzeigen in einem Canvas
+async function captureImage() {
+    const videoElement = await setupCamera();
+    const canvas = document.getElementById('canvas');
+    canvas.width = videoElement.videoWidth;
+    canvas.height = videoElement.videoHeight;
+    canvas.getContext('2d').drawImage(videoElement, 0, 0);
+    const image = canvas.toDataURL('image/png');
+    return image;
+}
+
+// Event-Handler für den Aufnahme-Button
+const captureButton = document.getElementById('captureButton');
+captureButton.addEventListener('click', async () => {
+    const image = await captureImage();
+    const downloadLink = document.getElementById('downloadLink');
+    downloadLink.href = image;
+    downloadLink.download = 'webcam-image.png';
+    downloadLink.style.display = 'block';
+});
+
+// Die Seite initialisieren
+setupCamera();
