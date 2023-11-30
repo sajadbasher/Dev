@@ -1,52 +1,74 @@
+let entries = [];
 
-    // Definition der addExpense-Funktion
-    function addExpense() {
-        const description = document.getElementById('description').value;
-        const date = document.getElementById('date').value;
-        const category = document.getElementById('category').value;
-        const amount = parseFloat(document.getElementById('amount').value);
-console.log(amount);
-        if (!description || !date || !category || isNaN(amount)) {
-            alert('Bitte füllen Sie alle Felder korrekt aus.');
-            return;
-        }
+// Laden der Einträge beim Start
+window.onload = function() {
+  const storedEntries = JSON.parse(localStorage.getItem('entries'));
+  if (storedEntries) {
+    entries = storedEntries;
+    updateEntriesTable();
+    updateBalance();
+  }
+};
 
-        const expense = {
-            description,
-            date,
-            category,
-            amount,
-        };
+function addEntry() {
+  const description = document.getElementById("description").value;
+  const date = document.getElementById("date").value;
+  const category = document.getElementById("category").value;
+  const amount = parseFloat(document.getElementById("amount").value);
 
-        expenses.push(expense);
-        updateExpenseList();
-    }
+  if (description && date && category && !isNaN(amount)) {
+    const entry = { description, date, category, amount };
+    entries.push(entry);
+    updateEntriesTable();
+    updateBalance();
+    saveEntries();
+    clearForm();
+  } else {
+    alert("Bitte füllen Sie alle Felder korrekt aus.");
+  }
+}
 
-    // Initialisierung der Ausgaben
-    let expenses = [];
+function updateEntriesTable() {
+  const tableBody = document.getElementById("entriesTableBody");
+  tableBody.innerHTML = "";
 
-    function updateExpenseList() {
-        const tableBody = document.getElementById('expenseTableBody');
-        const balanceSpan = document.getElementById('balance');
+  let balance = 0;
 
-        // Clear previous entries
-        tableBody.innerHTML = '';
+  entries.forEach(entry => {
+    const row = tableBody.insertRow();
+    const cell1 = row.insertCell(0);
+    const cell2 = row.insertCell(1);
+    const cell3 = row.insertCell(2);
+    const cell4 = row.insertCell(3);
+    const cell5 = row.insertCell(4);
 
-        // Populate the table
-        let totalAmount = 0;
-        expenses.forEach(expense => {
-            const row = tableBody.insertRow();
-            row.insertCell(0).innerText = expense.description;
-            row.insertCell(1).innerText = expense.date;
-            row.insertCell(2).innerText = expense.category;
-            row.insertCell(3).innerText = expense.amount.toFixed(2);
-            totalAmount += expense.amount;
-        });
+    cell1.textContent = entry.description;
+    cell2.textContent = entry.date;
+    cell3.textContent = entry.category;
+    cell4.textContent = entry.amount.toFixed(2);
 
-        // Update balance
-        balanceSpan.innerText = totalAmount.toFixed(2);
-    }
+    balance += entry.amount;
+    cell5.textContent = balance.toFixed(2);
+  });
+}
 
-    // Event-Listener für den Button hinzufügen
-    document.getElementById('addExpenseButton').addEventListener('click', addExpense);
+function updateBalance() {
+  const balanceElement = document.getElementById("balance");
+  const totalAmount = entries.reduce((sum, entry) => sum + entry.amount, 0);
+  balanceElement.textContent = totalAmount.toFixed(2);
+}
 
+function saveEntries() {
+  localStorage.setItem('entries', JSON.stringify(entries));
+}
+
+function clearForm() {
+  document.getElementById("description").value = "";
+  document.getElementById("date").value = "";
+  document.getElementById("category").value = "";
+  document.getElementById("amount").value = "";
+}
+
+// Initial update
+updateEntriesTable();
+updateBalance();
