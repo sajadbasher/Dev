@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+
     // Definition der addExpense-Funktion
     function addExpense() {
         const description = document.getElementById('description').value;
@@ -49,4 +49,4 @@ console.log(amount);
 
     // Event-Listener für den Button hinzufügen
     document.getElementById('addExpenseButton').addEventListener('click', addExpense);
-});
+
