@@ -1,5 +1,15 @@
 let entries = [];
 
+// Laden der Einträge beim Start
+window.onload = function() {
+  const storedEntries = JSON.parse(localStorage.getItem('entries'));
+  if (storedEntries) {
+    entries = storedEntries;
+    updateEntriesTable();
+    updateBalance();
+  }
+};
+
 function addEntry() {
   const description = document.getElementById("description").value;
   const date = document.getElementById("date").value;
@@ -11,6 +21,7 @@ function addEntry() {
     entries.push(entry);
     updateEntriesTable();
     updateBalance();
+    saveEntries();
     clearForm();
   } else {
     alert("Bitte füllen Sie alle Felder korrekt aus.");
@@ -35,11 +46,14 @@ function updateEntriesTable() {
   });
 }
 
-
 function updateBalance() {
   const balanceElement = document.getElementById("balance");
   const totalAmount = entries.reduce((sum, entry) => sum + entry.amount, 0);
   balanceElement.textContent = totalAmount.toFixed(2);
+}
+
+function saveEntries() {
+  localStorage.setItem('entries', JSON.stringify(entries));
 }
 
 function clearForm() {
