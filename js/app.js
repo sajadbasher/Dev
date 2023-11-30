@@ -23,12 +23,18 @@ function updateEntriesTable() {
 
   entries.forEach(entry => {
     const row = tableBody.insertRow();
-    row.insertCell(0).textContent = entry.description;
-    row.insertCell(1).textContent = entry.date;
-    row.insertCell(2).textContent = entry.category;
-    row.insertCell(3).textContent = entry.amount.toFixed(2);
+    const cell1 = row.insertCell(0);
+    const cell2 = row.insertCell(1);
+    const cell3 = row.insertCell(2);
+    const cell4 = row.insertCell(3);
+
+    cell1.textContent = entry.description;
+    cell2.textContent = entry.date;
+    cell3.textContent = entry.category;
+    cell4.textContent = entry.amount.toFixed(2);
   });
 }
+
 
 function updateBalance() {
   const balanceElement = document.getElementById("balance");
