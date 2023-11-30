@@ -23,7 +23,8 @@ function addExpense() {
 }
 
 function updateExpenseList() {
-    const tableBody = document.getElementById('expenseTableBody');
+    const tableBody = document.getElementById('addExpenseButton').addEventListener('click', addExpense);
+
     const balanceSpan = document.getElementById('balance');
 
     // Clear previous entries
