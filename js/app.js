@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const date = document.getElementById('date').value;
         const category = document.getElementById('category').value;
         const amount = parseFloat(document.getElementById('amount').value);
-
+console.log(amount);
         if (!description || !date || !category || isNaN(amount)) {
             alert('Bitte füllen Sie alle Felder korrekt aus.');
             return;
