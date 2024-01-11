@@ -1,74 +1,74 @@
-let entries = [];
+// Dieses Event wird ausgelöst, sobald das DOM vollständig geladen ist.
+document.addEventListener('DOMContentLoaded', (event) => {
+    // Hole alle Elemente mit der Klasse 'kanban-card'.
+    const cards = document.querySelectorAll('.kanban-card');
+    // Hole alle Elemente mit der Klasse 'kanban-column'.
+    const columns = document.querySelectorAll('.kanban-column');
 
-// Laden der Einträge beim Start
-window.onload = function() {
-  const storedEntries = JSON.parse(localStorage.getItem('entries'));
-  if (storedEntries) {
-    entries = storedEntries;
-    updateEntriesTable();
-    updateBalance();
-  }
-};
+    // Füge jedem Karten-Element Event-Listener für Drag-Start und Drag-End hinzu.
+    cards.forEach(card => {
+        card.addEventListener('dragstart', dragStart);
+        card.addEventListener('dragend', dragEnd);
+    });
 
-function addEntry() {
-  const description = document.getElementById("description").value;
-  const date = document.getElementById("date").value;
-  const category = document.getElementById("category").value;
-  const amount = parseFloat(document.getElementById("amount").value);
+    // Definiert, was beim Start des Ziehens passieren soll.
+    function dragStart(e) {
+        // Setzt die übertragene Datenart und den Wert (hier die ID der Karte).
+        e.dataTransfer.setData('text/plain', e.target.id);
+        // Kurz verzögert, um die Karte zu verstecken, damit sie nicht direkt unter dem Cursor erscheint.
+        setTimeout(() => {
+            e.target.classList.add('hide');
+        }, 0);
+    }
 
-  if (description && date && category && !isNaN(amount)) {
-    const entry = { description, date, category, amount };
-    entries.push(entry);
-    updateEntriesTable();
-    updateBalance();
-    saveEntries();
-    clearForm();
-  } else {
-    alert("Bitte füllen Sie alle Felder korrekt aus.");
-  }
-}
+    // Definiert, was geschieht, wenn das Ziehen (Drag) beendet wird.
+    function dragEnd(e) {
+        // Entfernt die Klasse 'hide', um die Karte wieder anzuzeigen.
+        e.target.classList.remove('hide');
+    }
 
-function updateEntriesTable() {
-  const tableBody = document.getElementById("entriesTableBody");
-  tableBody.innerHTML = "";
+    // Fügt jedem Spalten-Element Event-Listener für verschiedene Drag-Events hinzu.
+    columns.forEach(column => {
+        column.addEventListener('dragover', dragOver);
+        column.addEventListener('dragenter', dragEnter);
+        column.addEventListener('dragleave', dragLeave);
+        column.addEventListener('drop', drop);
+    });
 
-  let balance = 0;
+    // Verhindert das Standardverhalten des Browsers für das 'dragover'-Event.
+    function dragOver(e) {
+        e.preventDefault();
+    }
 
-  entries.forEach(entry => {
-    const row = tableBody.insertRow();
-    const cell1 = row.insertCell(0);
-    const cell2 = row.insertCell(1);
-    const cell3 = row.insertCell(2);
-    const cell4 = row.insertCell(3);
-    const cell5 = row.insertCell(4);
+    // Definiert, was beim Eintreten in das Drop-Ziel passiert (wenn die Karte über einer Spalte schwebt).
+    function dragEnter(e) {
+        e.preventDefault(); // Verhindert das Standardverhalten.
+        e.target.classList.add('drag-over'); // Fügt eine Klasse hinzu, um das Drop-Ziel zu highlighten.
+    }
 
-    cell1.textContent = entry.description;
-    cell2.textContent = entry.date;
-    cell3.textContent = entry.category;
-    cell4.textContent = entry.amount.toFixed(2);
+    // Definiert, was geschieht, wenn die Karte das Drop-Ziel verlässt.
+    function dragLeave(e) {
+        e.target.classList.remove('drag-over'); // Entfernt das Highlighting vom Drop-Ziel.
+    }
 
-    balance += entry.amount;
-    cell5.textContent = balance.toFixed(2);
-  });
-}
+    // Definiert, was geschieht, wenn die Karte in einem Drop-Ziel abgelegt wird.
+    function drop(e) {
+        // Verhindert das Standardverhalten des Browsers für das 'drop'-Event.
+        e.preventDefault();
+        // Holt die ID der gezogenen Karte aus den übertragenen Daten.
+        const id = e.dataTransfer.getData('text/plain');
+        // Holt das Karten-Element basierend auf seiner ID.
+        const card = document.getElementById(id);
+        // Entfernt das Highlighting vom Drop-Ziel.
+        e.target.classList.remove('drag-over');
 
-function updateBalance() {
-  const balanceElement = document.getElementById("balance");
-  const totalAmount = entries.reduce((sum, entry) => sum + entry.amount, 0);
-  balanceElement.textContent = totalAmount.toFixed(2);
-}
-
-function saveEntries() {
-  localStorage.setItem('entries', JSON.stringify(entries));
-}
-
-function clearForm() {
-  document.getElementById("description").value = "";
-  document.getElementById("date").value = "";
-  document.getElementById("category").value = "";
-  document.getElementById("amount").value = "";
-}
-
-// Initial update
-updateEntriesTable();
-updateBalance();
+        // Überprüft, ob das Drop-Ziel eine Karte ist, und fügt die gezogene Karte entsprechend ein.
+        if (e.target.className === 'kanban-card') {
+            // Wenn das Ziel eine Karte ist, füge die gezogene Karte direkt vor dieser Karte ein.
+            e.target.parentNode.insertBefore(card, e.target);
+        } else {
+            // Wenn das Ziel keine Karte ist (also eine Spalte), füge die gezogene Karte als letztes Kind der Spalte hinzu.
+            e.target.appendChild(card);
+        }
+    }
+});
