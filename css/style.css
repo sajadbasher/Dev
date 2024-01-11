@@ -1,7 +1,6 @@
 body {
     font-family: Arial, sans-serif;
 }
-
 .kanban-board {
     display: flex;
     justify-content: space-around;
@@ -21,7 +20,6 @@ body {
 }
 
 /* kanban karten */
-
 .kanban-card {
     padding: 10px;
     background-color: #fff;
@@ -35,13 +33,11 @@ body {
     margin: 0;
 }
 
-/* ein Element aus Kanban Karten beim Ziehen Verstecken  */
-.hide {
-    display: none;
+/* Karte beim Ziehen verstecken  */
+.hide { display: none;
 }
 
-/* Highlight-Stil für Drop-Ziele */
 .drag-over {
-    border: 2px dashed #666; /* Beispiel für ein Dashed-Border-Highlight */
-    background-color: #f7f7f7; /* Leichte Hintergrundfarbenänderung zum Hervorheben */
+    border: 2px dashed #666; /* Dash Border Highlight */
+    background-color: #f7f7f7; /* Hintergrundfarbe */
 }
