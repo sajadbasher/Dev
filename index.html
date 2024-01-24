@@ -1,55 +1,441 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json"> -->
+    <!-- ios support -->
+    <!--<link rel="apple-touch-icon" href="images/icons/icon-72x72.png">
+    <link rel="apple-touch-icon" href="images/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" href="images/icons/icon-128x128.png">
+    <link rel="apple-touch-icon" href="images/icons/icon-144x144.png">
+    <link rel="apple-touch-icon" href="images/icons/icon-152x152.png">
+    <link rel="apple-touch-icon" href="images/icons/icon-192x192.png">
+    <link rel="apple-touch-icon" href="images/icons/icon-384x384.png">
+    <link rel="apple-touch-icon" href="images/icons/icon-512x512.png">
+    <meta name="apple-mobile-web-app-status-bar" content="#db4938">
+    <meta name="theme-color" content="#db4938"> 
+    <title>Dev'Coffee PWA</title> 
+  </head>
+  <body>
+  <main>
+<div class="columns">
+  <div class="column">
+    <p><button type="button" onclick="getStream('video')">Grab video</button></p>
+    
+    <video controls autoplay style="height:180px; width: 240px;"></video>
+  </div>
+  <div class="column">
+    <p><button type="button" onclick="getStream('audio')">Grab audio</button></p>
+    
+    <audio controls></audio>
+  </div>
+</div>
+
+    <p><button onclick="getStream()">Grab video</button></p>
+<p><video autoplay style="height: 180px; width: 240px;"></video></p>
+<p><button onclick="takePhoto()">Take Photo!</button></p>
+<p><img id="imageTag" width="240" height="180"></p>
+
+<p><small>Demo by <a href="http://www.mcasas.tk/" target="_blank" rel="noopener">Miguel Casas-Sanchez</a>.</small></p>
+
+    <video autoplay style="height:180px; width: 240px; poster="https://image.freepik.com/free-icon/video-camera-symbol_318-40225.png" ></video>
+<p><button onclick="getStream()">Grab video & start recording</button></p>
+<p><button onclick="download()">Download!</button></p>
+  
+<p><small>Demo by <a href="http://www.mcasas.tk/" target="_blank" rel="noopener">Miguel Casas-Sanchez</a>.</small></p>
+
+    <p><button onclick="getStream()">Grab video & start local peer connection</button></p>
+
+<p>Local video</p>
+<video autoplay id="localVideo" style="height:180px; width: 240px; poster="https://image.freepik.com/free-icon/video-camera-symbol_318-40225.png" ></ video>
+
+<p>Remote video</p>
+<video autoplay id="remoteVideo" style="height:180px; width: 240px;"></video>
+
+<p><small>Demo by <a href="http://www.mcasas.tk/" target="_blank" rel="noopener">Miguel Casas-Sanchez</a>.</small></p>
+  </main>
+      
+      <!--  <nav>
+        <h1>Dev'Coffee</h1>
+        <ul>
+          <li>Home</li>
+          <li>About</li>
+          <li>Blog</li>
+        </ul> 
+      </nav>
+      <div class="container"></div>
+    </main>
+   <script src="js/app.js"></script> 
+  </body>
+</html> -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Kostenverwaltungs-App</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <!-- iOS support -->
+    <meta name="apple-mobile-web-app-status-bar" content="#db4938">
+    <meta name="theme-color" content="#db4938">
+    <title>PWA Sample</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        nav {
+            background-color: #db4938;
+            color: white;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        video {
+            height: 180px;
+            width: 240px;
+        }
+
+        button {
+            background-color: #db4938;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .container p {
+            flex: 1;
+        }
+
+        .container button {
+            flex: 0 0 auto;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #db4938;
+        }
+
+        .columns {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .column {
+            flex: 1;
+        }
+
+      
+        .container button {
+            margin-right: 10px;
+        }
+      .right-align {
+        padding: 40px; 
+        margin-left: auto; 
+        margin-right: 20px;
+    }
+      
+    </style>
+</head>
+
+<body>
+    <main>
+        <nav>
+         <h1 style="color: black;">PWA Sample</h1>
+
+            <ul>
+                <li>Home</li>
+                <li>About</li>
+                <li>Blog</li>
+            </ul>
+        </nav>
+
+    
+        <div class="container">
+                  <video autoplay style="height:180px; width: 240px;" poster="https://image.freepik.com/free-icon/video-camera-symbol_318-40225.png"></video>
+            <button onclick="getStream()">Grab video & start recording</button>
+            <button onclick="stopRecordingAndSaveToCache()">Stop & Save to Cache</button>
+            <button onclick="downloadFromCache()">Download Video from Cache</button>
+        </div>
+
+
+
+<!--
+<div class="container">
+    <p>Current permission status is <b id="status">unavailable</b>.</p>
+    <p><button onclick="requestPermission()">Request permission</button></p>
+    <p><button onclick="nonPersistentNotification()">Non-persistent notification</button></p>
+    <p><button onclick="persistentNotification()">Persistent notification</button></p>
+</div>
+-->
+
+<br><br>
+        <!-- Praktikum 2 -->
+     
+        <p><b>Praktikum 2</b></p>
+        <button id="askButton">Ask for location</button>
+        <table>
+            <tr>
+                <td>API used</td>
+                <td id="moApi"></td>
+            </tr>
+            <tr>
+                <td>linear acceleration (excl. gravity)</td>
+                <td id="moAccel"></td>
+            </tr>
+            <tr>
+                <td>acceleration incl. gravity</td>
+                <td id="moAccelGrav"></td>
+            </tr>
+            <tr>
+                <td>rotation rate</td>
+                <td id="moRotation"></td>
+            </tr>
+            <tr>
+                <td>interval (ms)</td>
+                <td id="moInterval"></td>
+            </tr>
+        </table>
+       
+<div id="target"></div>
+        </div>
+    </main>
+    <script src="js/app.js"></script>
+
+
+        <div id="target2"></div>
+
+      <br><br>
+        <!-- Praktikum 3 -->
+  <div class="right-align">
+        <p><b>Praktikum 3</b></p>
+        <p>Estimated storage usage is <b id="usage">unknown</b> bytes.</p>
+        <p>Estimated storage quota is <b id="quota">unknown</b> bytes.</p>
+        <p>Estimated usage is <b id="percent">unknown</b>%.</p>
+        <p>Persistent storage status is <b id="persisted">unknown</b>.</p>
+        <p><button onclick="requestPersistence()">Request persistent storage</button></p>
+
+        <p> <br>
+            <label>Engine</label>
+          <br>
+        </p>
+        <div role="group" id="selectEngine">
+            <input type="radio" name="engine" value="localStorage" checked /> Persistent Storage
+            <input type="radio" name="engine" value="sessionStorage" /> Per-Session Storage
+        </div>
+
+        <p>
+            <label for="value">Value for <code>myKey</code></label>
+            <input type="text" id="value">
+        </p>
+
+        <p>Open the example in another tab and change the value there to see the synchronization via <code>storage</code>
+            event.</p>
+
+        <div id="target3"></div>
+            
+
+        <div class="columns">
+            <div class="column">
+                <button class="btn-file">
+                    Choose files to read<br>(File API) <input type="file" onchange="readFiles(this.files)"
+                        multiple>
+                </button>
+
+                <p>Number of selected files: <b id="count">N/A</b></p>
+            </div>
+            <div class="column">
+                <button class="btn-file" onclick="writeFile()">
+                    Choose file to create or overwrite<br>(Native File System API)
+                </button>
+            </div>
+        </div>
+     </div>
+ <ul id="target4"></ul>
+    </main>
+    
+  <!-- Praktikum 4 -->
+  <p><b>Praktikum 4</b></p>
+<a href="homepage.html" class="button">Besuche unsere Website</a></div>
+
+        <script src="js/app.js"></script>
+  
+  <!-- Praktikum 5 -->
+  <p><b>Praktikum 5</b></p>
+  </script>
+
+
+<h1>Kosten-Tracker</h1>
+
+<form id="expenseForm">
+    <label for="description">Beschreibung:</label>
+    <input type="text" id="description" required>
+
+    <label for="date">Datum:</label>
+    <input type="date" id="date" required>
+
+    <label for="category">Kategorie:</label>
+    <input type="text" id="category" required>
+
+    <label for="amount">Wert der Transaktion:</label>
+    <input type="number" id="amount" required>
+
+    <!-- Neue Eingabe für den Kontostand -->
+    <label for="balance">Kontostand:</label>
+    <input type="number" id="balance" value="2000" disabled>
+
+    <button type="button" onclick="addExpense()">Eintrag hinzufügen</button>
+</form>
+
+<table id="expenseTable">
+    <thead>
+        <tr>
+            <th>Beschreibung</th>
+            <th>Datum</th>
+            <th>Kategorie</th>
+            <th>Wert der Transaktion</th>
+            <th>Kontostand</th>
+        </tr>
+    </thead>
+    <tbody id="expenseList">
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4" id="total">Gesamtsumme:</td>
+            <td id="currentBalance">2000.00</td>
+        </tr>
+    </tfoot>
+</table>
+
+<script>
+    let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+    let currentBalance = 2000; // Startwert für den Kontostand
+
+    function addExpense() {
+        const description = document.getElementById('description').value;
+        const date = document.getElementById('date').value;
+        const category = document.getElementById('category').value;
+        const amount = parseFloat(document.getElementById('amount').value);
+
+        if (description && date && category && !isNaN(amount)) {
+            expenses.push({ description, date, category, amount });
+            saveToLocalStorage();  
+            updateTable();
+            clearForm();
+
+            // Aktualisiere den Kontostand basierend auf der Transaktion
+            currentBalance += amount;
+            document.getElementById('currentBalance').textContent = currentBalance.toFixed(2);
+        } else {
+            alert('Bitte füllen Sie alle Felder korrekt aus.');
+        }
+    }
+
+    function updateTable() {
+        const tableBody = document.getElementById('expenseList');
+        const totalElement = document.getElementById('total');
+
+        tableBody.innerHTML = '';
+
+        let totalAmount = 0;
+        expenses.forEach(expense => {
+            const row = tableBody.insertRow();
+            row.insertCell(0).textContent = expense.description;
+            row.insertCell(1).textContent = expense.date;
+            row.insertCell(2).textContent = expense.category;
+            row.insertCell(3).textContent = expense.amount.toFixed(2);
+
+            totalAmount += expense.amount;
+        });
+
+        totalElement.textContent = 'Gesamtsumme:';
+        document.getElementById('currentBalance').textContent = currentBalance.toFixed(2);
+    }
+
+    function saveToLocalStorage() {
+        localStorage.setItem('expenses', JSON.stringify(expenses));
+    }
+
+    function clearForm() {
+        document.getElementById('description').value = '';
+        document.getElementById('date').value = '';
+        document.getElementById('category').value = '';
+        document.getElementById('amount').value = '';
+    }
+
+    updateTable();
+</script>
+  <!-- Praktikum 6 -->
+  <p><b>Praktikum 6</b></p>
+</body>
+</body>
+
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Drag and Drop</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Kostenverwaltungs-App</h1>
-        
-        <!-- Eingabeformular -->
-        <form id="expenseForm">
-            <label for="description">Beschreibung:</label>
-            <input type="text" id="description" required>
+  <div class="column" id="aufgabe" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <h2>Aufgabe</h2>
+  </div>
 
-            <label for="date">Datum:</label>
-            <input type="date" id="date" required>
+  <div class="column" id="bearbeitung" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <h2>Bearbeitung</h2>
+  </div>
 
-            <label for="category">Kategorie:</label>
-            <input type="text" id="category" required>
+  <div class="column" id="erledigt" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <h2>Erledigt</h2>
+  </div>
 
-            <label for="amount">Wert der Transaktion:</label>
-            <input type="number" id="amount" required>
+  <div class="test-element" draggable="true" ondragstart="drag(event)">Kanban ausprobieren</div>
+  <div class="test-element" draggable="true" ondragstart="drag(event)">Bunte post-its kaufen</div>
+  <div class="test-element" draggable="true" ondragstart="drag(event)">Mehr über Kanban lernen</div>
+  <div class="test-element" draggable="true" ondragstart="drag(event)">Kanban-Tafel einweihen</div>
 
-            <button type="button" id="addExpenseButton">Eintrag hinzufügen</button>
-        </form>
+  <script src="app.js"></script>
 
-        <!-- Kostenübersicht -->
-        <div id="expenseList">
-            <h2>Kostenübersicht</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Beschreibung</th>
-                        <th>Datum</th>
-                        <th>Kategorie</th>
-                        <th>Wert der Transaktion</th>
-                    </tr>
-                </thead>
-                <tbody id="expenseTableBody"></tbody>
-            </table>
-            <p>Gesamtsumme: <span id="balance">0</span></p>
-        </div>
-    </div>
-
-    <script src="js/app.js"></script>
 </body>
 </html>
-<div class="test-element">Drag me with one finger</div>
-<div class="test-element">Drag me with another finger</div>
-<div class="test-element">Drag me too</div>
-
-<p><small>Based on demo from <a href="https://www.quirksmode.org/m/tests/drag2.html">QuirksMode.org</a>.</small></p>
